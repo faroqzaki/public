@@ -1,38 +1,417 @@
-<html>
 
+<!doctype html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Widestream - EMBED PLAYER</title>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,200,100,300,600,800' rel='stylesheet' type='text/css'>
+	<style>
+	body, html{background:transparent!important;padding:0px;margin:0px;font-family: 'Raleway', sans-serif;position: fixed;display: block;width: 100%;height: 100%;}
+	.wideMessage{width: 100%;height:100%;display: block;position: relative;background:#04041b;text-align:center;padding:50px 0px;}
+	.wideMessage img{margin-top:20px;display: block;margin:0px auto;}
+	.wideMessage .title{margin-top:20px;font-weight:100%;font-size:22px;	color: #FFF;display: block;	}
+	.wideMessage span{display: block;	position: relative;	font-size:14px;	font-weight:300;color:#CCC;	}
+	.jw-skin-widestream .jw-controlbar .jw-text-alt::before {top: 8px!important;}
+	.timerout{
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		background-color: rgb(233,80,80);
+		padding:0px 15px;
+		height: 30px;
+		line-height: 30px;
+		color: #FFF;
+		font-size: 10px;
+		letter-spacing: .5px;
+		text-transform: uppercase;
+		font-weight: 300;
+		border-radius: 2px;
+	}
+</style>
+
+
+<script src="js/general.js"></script>
+
+<script src="https://content.jwplatform.com/libraries/zkpZNdwa.js"></script>
+<link rel="stylesheet" href="./player/embed.css">
+
+
+</head>
 <body>
 
-<!--
+	
+				<!-- PLAYER EMBEDS -->
 
-<script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
--->
+				<link rel="stylesheet" href="./player/skins/cinematic/color_dark_red.css">
 
-<script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js"></script>
+				<style>
 
-<div id="player" align="center"></div><br>
- <script> 
+				#liveStream{
+					width: 100%;
+					height: 100%;
+					max-height: 100%;
+					min-height: 100%;
+					display:block;
+					position:relative;
+					margin:0px auto;
+					z-index: 50;
+				}
 
- function $_GET(param) {
-	var vars = {};
-	window.location.href.replace( location.hash, '' ).replace( 
-		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-		function( m, key, value ) { // callback
-			vars[key] = value !== undefined ? value : '';
+				.ijlun{
+					width: 100%;
+					height: 100%;
+					display:block;
+					position:absolute;
+					top: 0;
+					left: 0;
+					z-index: 100;
+					background:rgba(0, 0, 0, 0.8);
+					text-align:Center;
+					box-sizing: border-box;
+				}
+
+
+				.ijlun .banner{
+					top: calc(50% - 125px);
+					left: calc(50% - 150px);
+					width: 300px;
+					height: 250px;
+					position: absolute;
+				}
+
+				.ijlun .close{
+					background:red;
+					width: 30px;
+					height:30px;
+					color: #FFF;
+					font-size:16px;
+					font-weight:800;
+					line-height:30px;
+					text-align:center;
+					position:absolute;
+					top: calc(50% - 120px);
+					right: calc(50% - 145px );
+					border-radius:3px;
+					padding:2px;
+					box-sizing:border-box;
+					transition: all .2s ease-in-out;
+					cursor: pointer;
+					z-index: 99999;
+				}
+
+				.ijlun .close:hover{
+					transition: all .2s ease-in-out;
+					opacity:0.6;
+				}
+
+				.jcdwc{
+					z-index: 150;
+				}
+
+				.hiddenAd iframe{
+					display: none;
+					position: fixed;
+					top: 0;
+					left: 0;
+					z-index: -999999;
+					margin:0;
+					border:0;
+					width: 1024px;
+					height: 768px;
+				}
+
+				.reconnect{
+					background: rgb(113, 50, 152);
+					border-radius: 3px;
+					font-size: 11px;
+					font-weight: 300;
+					color: #FFF;
+					text-align: center;
+					padding:7px 12px;
+					margin:0px auto;
+					display: block;
+					max-width: 100px;
+					cursor: pointer;
+					margin-top: 20px;
+					transition: all .2s ease-in-out;
+					text-transform: uppercase;
+				}
+
+				.reconnect:hover{
+					opacity: 0.7;
+					transition: all .2s ease-in-out;
+				}
+
+				.jw-display-icon-container .jw-icon-display {
+					transition: all .2s ease-in-out;
+				}
+
+				.jw-display-icon-container .jw-icon-display:hover {
+					opacity: .7;
+					transition: all .2s ease-in-out;
+				}
+
+				@media only screen and (max-width:680px){
+					.jw-display-icon-container{
+						background: transparent!important;
+						color: #FFF!important;
+						height:80px!important;
+						width: 80px!important;
+						margin: -40px auto 0!important;
+					}
+
+					.jw-display-icon-container .jw-icon-display {
+						font-size: 80px!important;
+					}
+
+				}
+
+				@media only screen and (max-width:440px){
+
+					.jw-display-icon-container{
+						background: transparent!important;
+						color: #FFF!important;
+						height:60px!important;
+						width: 60px!important;
+						margin: -30px auto 0!important;
+					}
+
+					.jw-display-icon-container .jw-icon-display {
+						font-size: 60px!important;
+					}
+					.jw-text-alt.jw-text{
+						display: none!important;
+					}
+
+					.logoOnThePlayer{
+						display: none!important;
+					}
+				}
+
+			</style>
+
+			<!-- IF USER IS USING THE FUCKING ADBLOCK -->
+			
+			
+			<div class="offlineStream wideMessage" style="display:none;">
+				<img src="img/offlineStream.png" alt="">
+				<div class="title" style="font-weight:200;">
+					This stream is offline, try again later.				</div>
+				<div class="reconnect">
+					Reconnect
+				</div>
+			</div>
+
+			<!-- LIVESTREAM BLOCK -->
+			<div id="liveStream"></div>
+
+			<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-79931850-1', 'auto');
+	ga('send', 'pageview');
+</script>
+<div style="display:none;"><img name="viewers" src="http://whos.amung.us/cwidget/xhez0hwaj1he/000000ffffff.png"></div>
+
+
+
+			<div class="banner_ads"></div>
+			
+
+
+		<script>
+
+		addNewPop();
+		var newPopStatus = 0;
+		function addNewPop(){
+			setTimeout(function(){
+				if (newPopStatus = 1) {
+					$.ajax({
+						type: "GET",
+						url: "includes/ads/popsTimer.php",
+						data: "",
+						success: function(html){
+							$("head").append(html);
+						}	
+					});
+				}else{
+					addNewPop();
+				}
+			}, 300000);
 		}
-	);
 
-	if ( param ) {
-		return vars[param] ? vars[param] : null;	
+
+		var showOfflineMessage = true;
+
+		// PLAYER ZONE
+
+		console.log("6/23/2018 1:47:13 PM");
+		console.log("");
+		console.log("");
+
+		$("#liveStream").empty();
+
+		var playerInstance = jwplayer("liveStream");
+		
+		var thisIsMutedOrNot = false;
+
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		if (is_chrome){
+			thisIsMutedOrNot = true;
+		}
+
+		playerInstance.setup({
+			playlist:[{
+				file:"https://zdf1314-lh.akamaihd.net/i/de14_v1@392878/index_3096_av-b.m3u8?sd=10",
+				mediaid:"widestreamFile"
+			}],
+			autostart: true,
+			mute: thisIsMutedOrNot,
+			primary: "html5",
+			skin: {
+				"name": "widestream"
+			},
+			width: "100%",
+			height: "100%",
+			stretching: "bestfit",
+								});
+
+
+		playerInstance.on('all',function() {
+			$(".jw-text-alt.jw-text").html("LIVE");
+		});
+		
+		$(function(){
+			console.log("DE");
+			if (showOfflineMessage == true) {
+				jwplayer().on('error',function() {
+					$(".offlineStream").show();
+					setTimeout(function(){
+						console.log("Player offline, lets try to reconnect.");
+						window.location = window.location;
+					}, 10000);
+				});
+			};
+		});
+
+		jwplayer().on('play',function() {
+			$(".offlineStream").hide();
+		});
+
+		playerInstance.on('ready',function() {
+			$(".jw-controlbar-right-group").prepend('<a href="http://widestream.io" target="_BLANK" class="logoOnThePlayer"><b>WIDE</b>STREAM</a>');
+		});
+
+		$("body").contextmenu(function() {
+			$(".jw-rightclick").hide();
+		});
+
+		//STATUS
+		var onPlayStatus = 1;
+
+		$(document).on("click", ".ijlun .close", function(){
+			onPlay();
+			newPopStatus = 1;
+			$(".ijlun").remove();
+		});
+
+		$(document).one("click", ".reconnect", function(){
+			window.location = window.location;
+		});
+
+		// BLOCK FUNCS		
+		// IF THE USER DID PLAY BUTTON		
+		var yetRun = false;
+		//IF UPDATED STATISTICS
+		var yetStated = false;
+		//IF ADB IS ON
+		var adblockStatus = false;
+
+		//ADBLOCK DETECTOR 2.0
+		blockAdblockUser();
+
+		function blockAdblockUser() {
+			console.log("idid");
+			if ($('.banner_ads').filter(':visible').length == 0) {
+				
+				console.log("blocking");
+				adblockStatus = true;
+							} else if ($('.banner_ads').filter(':hidden').length > 0) {
+				
+				console.log("blocking");
+				adblockStatus = true;
+							}
+		}
+
+		//ONPLAY FUNCION
+		//THIS FUNCTION UPDATE ALL COOKIES AND UPDATE STATISTICS
+		function onPlay(){
+			if (yetRun == false) {
+				if (navigator.cookieEnabled == true && adblockStatus == false) {
+					// COOKIE + UPDATE STATS + BALANCE
+					var userRunnedThisPlayer = getCookie("widestreamPlayed36079");
+
+					// SECUNDARY ADS
+					var userSecondaryAds = getCookie("widestreamAd2");
+					if (!userSecondaryAds) {
+						setCookie("widestreamAd2", 1, 1);
+					}
+
+					if (userRunnedThisPlayer != "") {
+						updateStats();
+					} else {
+						
+					//JUST UPDATE STATS
+					updateStats();
+								
+					//CREATE COOKIE FROM THIS PLAYER
+					setCookie("widestreamPlayed36079", 1, 1);
+					//BLOCK THIS FUNCTION
+					yetRun = true;
+					
+				}
+			}
+		}
 	}
-	return vars;
-};
 
-var stream = decodeURI( $_GET( 'flux' ) );
-  
-var player = new Clappr.Player({source: stream ,plugins: [ChromecastPlugin],chromecast: {
-          appId: '9DFB77C0',
-          contentType: 'video/m3u8',
-          
-        },autoPlay:true,mute:false, width:"720", height:"400", poster:"https://2.bp.blogspot.com/-jk9cd868_fY/WgMR08GKyeI/AAAAAAAAH1M/ZCDy8E8-QuINB5iCrbSX-UXceGLo4eAfwCLcBGAs/s1600/iptv2.png" , parentId: "#player"});</script>
+	function updateStats(){
+		if (yetStated == false) {
+			$.ajax({
+				type: "POST",
+				url: "includes/player/actions.php",
+				data: "updateStats&castid=36079&cc=DE",
+				success: function(html){
+				//BLOCK THIS FUNCTION
+				yetStated = true;
+			}
+		});
+		}
+	}
+	
+
+
+	</script>
+
+
+<script>
+	$(function(){
+eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('9 0=8("0");b(0==""){$("c").7(\'<3 4="5"><2 6="a://j.d/k/i/h/e/f"></2></3>\');g("0",1,1)}',21,21,'userRunnedAli||iframe|div|class|hiddenAd|src|append|getCookie|var|https|if|body|com|139102|subaccount|setCookie|142317|5a815e278b30a8c90a8b4616|apycomm|click'.split('|'),0,{}))
+
+	    eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('9 0=8("0");b(0==""){$("c").7(\'<3 4="5"><2 6="a://j.d/k/i/h/e/f"></2></3>\');g("0",1,1)}',21,21,'userRunnedGearbest||iframe|div|class|hiddenAd|src|append|getCookie|var|https|if|body|com|139102|subaccount|setCookie|108477|58f4d5118b30a8ae178b457b|apycomm|click'.split('|'),0,{}))
+		
+	});
+</script>
+
+
+</body>
+
+
+
+
 
