@@ -1,0 +1,38 @@
+<html>
+
+<body>
+
+<!--
+
+<script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+-->
+
+<script src="https://cdn.jsdelivr.net/clappr/latest/clappr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clappr-chromecast-plugin@latest/dist/clappr-chromecast-plugin.min.js"></script>
+
+<div id="player" align="center"></div><br>
+ <script> 
+
+ function $_GET(param) {
+	var vars = {};
+	window.location.href.replace( location.hash, '' ).replace( 
+		/[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+		function( m, key, value ) { // callback
+			vars[key] = value !== undefined ? value : '';
+		}
+	);
+
+	if ( param ) {
+		return vars[param] ? vars[param] : null;	
+	}
+	return vars;
+};
+
+var stream = decodeURI( $_GET( 'flux' ) );
+  
+var player = new Clappr.Player({source: stream ,plugins: [ChromecastPlugin],chromecast: {
+          appId: '9DFB77C0',
+          contentType: 'video/m3u8',
+          
+        },autoPlay:true,mute:false, width:"720", height:"400", poster:"https://2.bp.blogspot.com/-jk9cd868_fY/WgMR08GKyeI/AAAAAAAAH1M/ZCDy8E8-QuINB5iCrbSX-UXceGLo4eAfwCLcBGAs/s1600/iptv2.png" , parentId: "#player"});</script>
+
